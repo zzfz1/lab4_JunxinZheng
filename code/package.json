@@ -1,0 +1,34 @@
+{
+  "name": "backend_lab4_junxin_zheng",
+  "version": "1.0.0",
+  "description": "Code of backend lab4",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zzfz1/lab4_JunxinZheng.git"
+  },
+  "keywords": [
+    "express"
+  ],
+  "author": "JunxinZheng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zzfz1/lab4_JunxinZheng/issues"
+  },
+  "homepage": "https://github.com/zzfz1/lab4_JunxinZheng#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "knex": "^2.4.2",
+    "sqlite3": "^5.1.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}

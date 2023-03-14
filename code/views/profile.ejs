@@ -1,0 +1,6 @@
+<h1>Profile</h1>
+<ul>
+  <% for(const key in locals.user){%>
+    <li><%= key+" : "+locals.user[key] %></li>
+  <% } %>
+</ul>

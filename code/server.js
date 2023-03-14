@@ -21,6 +21,7 @@ app
     const name = req.body.name;
     const password = req.body.password;
     const user = await db.getUser(name);
+    const userID = user[0].userID;
     if (!user.length) {
       res.redirect(400, "/register");
       return;
@@ -31,10 +32,10 @@ app
       });
     }
     currentKey = jwt.sign(
-      { name: name, role: user[0].role },
+      { userID: userID, name: name, role: user[0].role },
       process.env.ACCESS_TOKEN_SECRET
     );
-    res.redirect("/granted");
+    res.redirect("/users/" + userID);
   })
   .get((req, res) => {
     res.render("identify.ejs");
@@ -47,16 +48,20 @@ function authenticateToken(req, res, next) {
   } else if (
     (decoded = jwt.verify(currentKey, process.env.ACCESS_TOKEN_SECRET))
   ) {
-    req.user = { name: decoded.name, role: decoded.role };
+    req.user = {
+      userID: decoded.userID,
+      name: decoded.name,
+      role: decoded.role,
+    };
     next();
   } else {
     res.redirect(401, "/identify");
   }
 }
 
-app.get("/granted", authenticateToken, (req, res) => {
-  res.render("start.ejs", { name: req.user.name, role: req.user.role });
-});
+// app.get("/granted", authenticateToken, (req, res) => {
+//   res.render("start.ejs", { name: req.user.name, role: req.user.role });
+// });
 
 function authenticateRole(page) {
   permittedRoles = {
@@ -80,6 +85,7 @@ function authenticateRole(page) {
         return;
       }
       next();
+      return;
     }
     res.redirect(403, "/identify");
   };
@@ -141,5 +147,15 @@ app
       });
     }
   });
+
+app.route("/users/:userId").get(authenticateToken, async (req, res) => {
+  const user = await db.getUser(req.user.name);
+  if (!user.length) {
+    res.status(404).render("fail.ejs", { message: "No Such User!" });
+  }
+  if (req.user.userID == req.params.userId)
+    res.render("profile.ejs", { user: user[0] });
+  else res.redirect(403, "/identify");
+});
 
 app.listen(8000);

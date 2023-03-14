@@ -59,10 +59,6 @@ function authenticateToken(req, res, next) {
   }
 }
 
-// app.get("/granted", authenticateToken, (req, res) => {
-//   res.render("start.ejs", { name: req.user.name, role: req.user.role });
-// });
-
 function authenticateRole(page) {
   permittedRoles = {
     student1: ["student", "teacher", "admin"],

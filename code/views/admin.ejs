@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin</title>
+</head>
+<body>
+  <ol>
+    <% locals.users.forEach((user) => { %>
+        <li>
+          <ul>
+            <% for(const key in user){%>
+              <li><%= key+" : "+user[key] %></li>
+            <% } %>
+          </ul>
+        </li>
+    <%});%>
+  </ol>
+</body>
+</html>

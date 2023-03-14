@@ -4,6 +4,7 @@
   "description": "Code of backend lab4",
   "main": "server.js",
   "scripts": {
+    "start":"nodemon server.js",
     "test": "jest"
   },
   "repository": {

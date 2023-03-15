@@ -1,22 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin</title>
+	<title>Admin Page</title>
 </head>
 <body>
-  <ol>
-    <% locals.users.forEach((user) => { %>
-        <li>
-          <ul>
-            <% for(const key in user){%>
-              <li><%= key+" : "+user[key] %></li>
-            <% } %>
-          </ul>
-        </li>
-    <%});%>
-  </ol>
+	<h1>Admin Page</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>User ID</th>
+				<th>Name</th>
+				<th>Role</th>
+				<th>Password</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% locals.users.forEach(function(user) { %>
+				<tr>
+					<td><%= user.userID %></td>
+					<td><%= user.name %></td>
+					<td><%= user.role %></td>
+					<td><%= user.password %></td>
+				</tr>
+			<% }); %>
+		</tbody>
+	</table>
 </body>
 </html>

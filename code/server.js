@@ -21,11 +21,11 @@ app
     const name = req.body.name;
     const password = req.body.password;
     const user = await db.getUser(name);
-    const userID = user[0].userID;
     if (!user.length) {
       res.redirect(400, "/register");
       return;
     }
+    const userID = user[0].userID;
     if (!(await bcrypt.compare(password, user[0].password))) {
       res.status(400).render("fail.ejs", {
         message: "Incorrect Password!",
@@ -97,17 +97,17 @@ app
 app
   .route("/student1")
   .get(authenticateToken, authenticateRole("student1"), async (req, res) => {
-    res.render("student1.ejs");
+    res.render("student1.ejs", { username: req.user.name });
   });
 app
   .route("/student2")
   .get(authenticateToken, authenticateRole("student2"), async (req, res) => {
-    res.render("student2.ejs");
+    res.render("student2.ejs", { username: req.user.name });
   });
 app
   .route("/teacher")
   .get(authenticateToken, authenticateRole("teacher"), async (req, res) => {
-    res.render("teacher.ejs");
+    res.render("teacher.ejs", { username: req.user.name });
   });
 
 app

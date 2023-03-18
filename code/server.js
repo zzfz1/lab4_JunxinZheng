@@ -4,16 +4,16 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const db = require("./db/database");
 const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
 
 app.set("view-engine", "ejs");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.redirect("/identify");
 });
-
-let currentKey = "";
 
 app
   .route("/identify")
@@ -31,10 +31,15 @@ app
         message: "Incorrect Password!",
       });
     }
-    currentKey = jwt.sign(
+    const token = jwt.sign(
       { userID: userID, name: name, role: user[0].role },
       process.env.ACCESS_TOKEN_SECRET
     );
+    const cookieOptions = {
+      httpOnly: true,
+      maxAge: 86400000,
+    };
+    res.cookie("jwt", token, cookieOptions);
     res.redirect("/users/" + userID);
   })
   .get((req, res) => {
@@ -43,10 +48,10 @@ app
 
 function authenticateToken(req, res, next) {
   let decoded;
-  if (currentKey == "") {
+  if (!req.cookies || !req.cookies.jwt) {
     res.redirect(401, "/identify");
   } else if (
-    (decoded = jwt.verify(currentKey, process.env.ACCESS_TOKEN_SECRET))
+    (decoded = jwt.verify(req.cookies.jwt, process.env.ACCESS_TOKEN_SECRET))
   ) {
     req.user = {
       userID: decoded.userID,

@@ -4,7 +4,7 @@
   "description": "Code of backend lab4",
   "main": "server.js",
   "scripts": {
-    "start":"nodemon server.js",
+    "start": "nodemon server.js",
     "test": "jest"
   },
   "repository": {
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/zzfz1/lab4_JunxinZheng#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
     "express": "^4.18.2",
